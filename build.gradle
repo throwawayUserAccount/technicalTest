@@ -1,0 +1,36 @@
+apply plugin: 'java'
+apply plugin: 'org.springframework.boot'
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5.9.RELEASE")
+    }
+}
+
+sourceCompatibility = 1.8
+
+group 'uk.co.rbs.technicalTest'
+version '1.0'
+
+repositories {
+  mavenCentral()
+}
+
+dependencies {
+  compile("org.springframework.boot:spring-boot-starter-web:1.5.9.RELEASE")
+  testCompile("org.springframework.boot:spring-boot-starter-test:1.5.9.RELEASE")
+}
+
+
+jar {
+    doFirst {
+        from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    }
+    manifest {
+        attributes 'Main-Class': 'Application'
+    }
+    exclude 'META-INF/*.RSA', 'META-INF/*.SF','META-INF/*.DSA'
+}
