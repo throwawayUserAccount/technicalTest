@@ -1,6 +1,5 @@
-package uk.co.rbs.technicalTest;
+package uk.co.rbs.technicalTest.controller;
 
-import org.hamcrest.CoreMatchers;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,9 +11,11 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import uk.co.rbs.technicalTest.controllers.PrimesController;
 
+import static org.hamcrest.CoreMatchers.equalTo;
+
 @RunWith(SpringRunner.class)
 @WebMvcTest(PrimesController.class)
-public class PrimesResourceTest {
+public class PrimesControllerTest {
 
     @Autowired
     private MockMvc mockMVC;
@@ -24,6 +25,7 @@ public class PrimesResourceTest {
         mockMVC.perform(MockMvcRequestBuilders.get("/primes/12")
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().string(CoreMatchers.equalTo("{ \"upto\" : 12, \"primes\" : [ 2, 3, 5, 7, 11 ]}")));
+                .andExpect(MockMvcResultMatchers.content().string(
+                        equalTo("{ \"upto\" : 12, \"primes\" : [2, 3, 5, 7, 11]}")));
     }
 }

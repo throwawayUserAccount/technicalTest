@@ -20,6 +20,6 @@ public class PrimeResourceIntegrationTest {
     @Test
     public void shouldGetPrimesUptoAValidNumber() throws Exception {
         ResponseEntity<String> response = restTemplate.getForEntity("/primes/12", String.class);
-        Assert.assertThat(response.getBody(), Matchers.equalTo("{ \"upto\" : 12, \"primes\" : [ 2, 3, 5, 7, 11 ]}"));
+        Assert.assertThat(response.getBody(), Matchers.equalTo("{ \"upto\" : 12, \"primes\" : [2, 3, 5, 7, 11]}"));
     }
 }

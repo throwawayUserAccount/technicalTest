@@ -1,5 +1,6 @@
 package uk.co.rbs.technicalTest.controllers;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -9,7 +10,7 @@ import uk.co.rbs.technicalTest.service.PrimesService;
 public class PrimesController {
 
     @GetMapping("/primes/{upto}")
-    public String getPrimes(@PathVariable("upto") int upto) {
+    public ResponseEntity<String> getPrimes(@PathVariable("upto") int upto) {
         return PrimesService.primesUpto(upto);
     }
 }
