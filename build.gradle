@@ -24,6 +24,24 @@ dependencies {
   testCompile("org.springframework.boot:spring-boot-starter-test:1.5.9.RELEASE")
 }
 
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src/main/java']
+        }
+        resources {
+            srcDirs = ['src/main/resources']
+        }
+    }
+    test {
+        java {
+            srcDirs = ['src/test/unit', 'src/test/integration']
+        }
+        resources {
+            srcDirs = ['src/test/resources']
+        }
+    }
+}
 
 jar {
     doFirst {
