@@ -9,7 +9,7 @@ import uk.co.rbs.technicalTest.service.PrimesService;
 public class PrimesController {
 
     @GetMapping("/primes/{upto}")
-    public static String getPrimes(@PathVariable("upto") int upto) {
+    public String getPrimes(@PathVariable("upto") int upto) {
         return PrimesService.primesUpto(upto);
     }
 

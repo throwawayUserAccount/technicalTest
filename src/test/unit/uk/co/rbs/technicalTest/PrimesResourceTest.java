@@ -25,6 +25,5 @@ public class PrimesResourceTest {
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().string(CoreMatchers.equalTo("{ \"upto\" : 12, \"primes\" : [ 2, 3, 5, 7, 11 ]}")));
-
     }
 }
