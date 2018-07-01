@@ -20,7 +20,7 @@ public class PrimesResourceTest {
     private MockMvc mockMVC;
 
     @Test
-    public void shouldGetGreeting() throws Exception {
+    public void shouldGetPrimesUptoAValidNumber() throws Exception {
         mockMVC.perform(MockMvcRequestBuilders.get("/primes/12")
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())

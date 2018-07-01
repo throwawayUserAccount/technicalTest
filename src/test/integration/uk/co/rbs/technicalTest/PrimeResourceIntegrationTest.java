@@ -18,7 +18,7 @@ public class PrimeResourceIntegrationTest {
     private TestRestTemplate restTemplate;
 
     @Test
-    public void shouldGetGreeting() throws Exception {
+    public void shouldGetPrimesUptoAValidNumber() throws Exception {
         ResponseEntity<String> response = restTemplate.getForEntity("/primes/12", String.class);
         Assert.assertThat(response.getBody(), Matchers.equalTo("{ \"upto\" : 12, \"primes\" : [ 2, 3, 5, 7, 11 ]}"));
     }

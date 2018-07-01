@@ -12,5 +12,4 @@ public class PrimesController {
     public String getPrimes(@PathVariable("upto") int upto) {
         return PrimesService.primesUpto(upto);
     }
-
 }
