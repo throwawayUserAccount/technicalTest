@@ -28,35 +28,35 @@ public class PrimeResourceIntegrationTest {
     @Test
     public void shouldReturnEmptyCollectionForZero() throws Exception {
         ResponseEntity<String> response = restTemplate.getForEntity("/primes/0", String.class);
-        assertThat(response.getBody(), Matchers.equalTo("{ \"upto\" : 0, \"primes\" : []}"));
+        assertThat(response.getBody(), Matchers.equalTo("{ \"Initial\" : 0, \"Primes\" : []}"));
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
     @Test
     public void shouldReturnEmptyCollectionForOne() throws Exception {
         ResponseEntity<String> response = restTemplate.getForEntity("/primes/1", String.class);
-        assertThat(response.getBody(), Matchers.equalTo("{ \"upto\" : 1, \"primes\" : []}"));
+        assertThat(response.getBody(), Matchers.equalTo("{ \"Initial\" : 1, \"Primes\" : []}"));
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
     @Test
     public void shouldReturnCollectionOfPrimesUptoAndIncludingValueForPositiveIntegersGreaterThanOne() throws Exception {
         ResponseEntity<String> response = restTemplate.getForEntity("/primes/2", String.class);
-        assertThat(response.getBody(), Matchers.equalTo("{ \"upto\" : 2, \"primes\" : [2]}"));
+        assertThat(response.getBody(), Matchers.equalTo("{ \"Initial\" : 2, \"Primes\" : [2]}"));
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
     @Test
     public void shouldGetPrimesUptoAValidNumber() throws Exception {
         ResponseEntity<String> response = restTemplate.getForEntity("/primes/12", String.class);
-        assertThat(response.getBody(), Matchers.equalTo("{ \"upto\" : 12, \"primes\" : [2, 3, 5, 7, 11]}"));
+        assertThat(response.getBody(), Matchers.equalTo("{ \"Initial\" : 12, \"Primes\" : [2, 3, 5, 7, 11]}"));
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
     @Test
     public void shouldGetPrimesUptoSomeLargeNumber() throws Exception {
         ResponseEntity<String> response = restTemplate.getForEntity("/primes/9999999", String.class);
-        assertThat(response.getBody(), Matchers.containsString("{ \"upto\" : 9999999, \"primes\" : [2, 3, 5, 7, 11, 13"));
+        assertThat(response.getBody(), Matchers.containsString("{ \"Initial\" : 9999999, \"Primes\" : [2, 3, 5, 7, 11, 13"));
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 

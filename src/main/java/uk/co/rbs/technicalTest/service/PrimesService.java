@@ -14,7 +14,7 @@ public class PrimesService {
     private static final boolean IS_PRIME = true;
 
     public static ResponseEntity<String> primesUpto(Integer upto) {
-        return new ResponseEntity<>("{ \"upto\" : " + upto + ", \"primes\" : " + getPrimes(upto).toString() + "}", OK);
+        return new ResponseEntity<>("{ \"Initial\" : " + upto + ", \"Primes\" : " + getPrimes(upto).toString() + "}", OK);
     }
 
     public static Collection getPrimes(Integer upto) {
