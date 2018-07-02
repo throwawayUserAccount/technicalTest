@@ -3,8 +3,7 @@ package uk.co.rbs.technicalTest.service;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 import static org.springframework.http.HttpStatus.OK;
 
@@ -15,11 +14,11 @@ public class PrimesService {
     private static final boolean IS_PRIME = true;
 
     public static ResponseEntity<String> primesUpto(Integer upto) {
-        return new ResponseEntity<String>("{ \"upto\" : " + upto + ", \"primes\" : " + getPrimes(upto).toString() + "}", OK);
+        return new ResponseEntity<>("{ \"upto\" : " + upto + ", \"primes\" : " + getPrimes(upto).toString() + "}", OK);
     }
 
-    public static Set getPrimes(Integer upto) {
-        Set<Integer> primes = new HashSet<>();
+    public static Collection getPrimes(Integer upto) {
+        List<Integer> primes = new ArrayList<>();
         for (int i = 2; i <= upto; i++) {
             if (isPrime(i))
                 primes.add(i);
