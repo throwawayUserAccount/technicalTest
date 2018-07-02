@@ -21,6 +21,8 @@ repositories {
 
 dependencies {
   compile("org.springframework.boot:spring-boot-starter-web:1.5.9.RELEASE")
+  compile("org.json:json:20180130")
+
   testCompile("org.springframework.boot:spring-boot-starter-test:1.5.9.RELEASE")
 }
 

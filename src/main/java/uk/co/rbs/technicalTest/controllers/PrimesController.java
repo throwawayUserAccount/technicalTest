@@ -12,8 +12,8 @@ import static org.springframework.http.HttpStatus.BAD_REQUEST;
 public class PrimesController {
 
     private static final int TEN_MILLION = 10000000; // response gets too slow beyond 10m.
-    public static final String INVALID_INPUT = "{ \"error\": \"Invalid Input\", " +
-            "\"message\": \"Try again with a positive integer.\" }";
+    public static final String INVALID_INPUT = "{\"error\":\"Invalid Input\"," +
+            "\"message\":\"Try again with a positive integer.\"}";
 
     @GetMapping("/primes/{upto:.+}")
     public ResponseEntity<String> getPrimes(@PathVariable("upto") String upto) {
@@ -30,8 +30,8 @@ public class PrimesController {
             }
 
             if (isTooLarge(input)) {
-                return badRequest("{ \"error\": \"Invalid Input\", " +
-                        "\"message\": \"Number too large. Try another integer less than 10,000,000\" }");
+                return badRequest("{\"error\":\"Invalid Input\"," +
+                        "\"message\":\"Number too large. Try another integer less than 10,000,000\"}");
             }
         } catch (NumberFormatException ex) {
 
