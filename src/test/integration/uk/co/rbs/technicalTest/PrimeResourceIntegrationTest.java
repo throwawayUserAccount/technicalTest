@@ -2,7 +2,6 @@ package uk.co.rbs.technicalTest;
 
 import org.hamcrest.Matchers;
 import org.json.JSONObject;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,77 +31,27 @@ public class PrimeResourceIntegrationTest {
 
     @Test
     public void shouldReturnEmptyCollectionForZero() throws Exception {
-        Map<String, String> expectedValues = new HashMap<>();
-        expectedValues.put("Initial", "0");
-        expectedValues.put("Primes", "[]");
-        JSONObject expectedJson = new JSONObject(expectedValues);
-
-        ResponseEntity<String> response = restTemplate.getForEntity("/primes/0", String.class);
-        JSONObject actualJson = new JSONObject(response.getBody());
-
-        assertEquals(expectedJson.get("Initial"), actualJson.get("Initial"));
-        assertEquals(expectedJson.get("Primes"), actualJson.get("Primes"));
-        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertPrimeEndpointStatusIsOkAndPrimesEqual("0", "[]");
     }
 
     @Test
     public void shouldReturnEmptyCollectionForOne() throws Exception {
-        Map<String, String> expectedValues = new HashMap<>();
-        expectedValues.put("Initial", "1");
-        expectedValues.put("Primes", "[]");
-        JSONObject expectedJson = new JSONObject(expectedValues);
-
-        ResponseEntity<String> response = restTemplate.getForEntity("/primes/1", String.class);
-        JSONObject actualJson = new JSONObject(response.getBody());
-
-        assertEquals(expectedJson.get("Initial"), actualJson.get("Initial"));
-        assertEquals(expectedJson.get("Primes"), actualJson.get("Primes"));
-        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertPrimeEndpointStatusIsOkAndPrimesEqual("1", "[]");
     }
 
     @Test
     public void shouldReturnCollectionOfPrimesUptoAndIncludingValueForPositiveIntegersGreaterThanOne() throws Exception {
-        Map<String, String> expectedValues = new HashMap<>();
-        expectedValues.put("Initial", "2");
-        expectedValues.put("Primes", "[2]");
-        JSONObject expectedJson = new JSONObject(expectedValues);
-
-        ResponseEntity<String> response = restTemplate.getForEntity("/primes/2", String.class);
-        JSONObject actualJson = new JSONObject(response.getBody());
-
-        assertEquals(expectedJson.get("Initial"), actualJson.get("Initial"));
-        assertEquals(expectedJson.get("Primes"), actualJson.get("Primes"));
-        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertPrimeEndpointStatusIsOkAndPrimesEqual("2", "[2]");
     }
 
     @Test
     public void shouldGetPrimesUptoAValidNumber() throws Exception {
-        Map<String, String> expectedValues = new HashMap<>();
-        expectedValues.put("Initial", "12");
-        expectedValues.put("Primes", "[2, 3, 5, 7, 11]");
-        JSONObject expectedJson = new JSONObject(expectedValues);
-
-        ResponseEntity<String> response = restTemplate.getForEntity("/primes/12", String.class);
-        JSONObject actualJson = new JSONObject(response.getBody());
-
-        assertEquals(expectedJson.get("Initial"), actualJson.get("Initial"));
-        assertEquals(expectedJson.get("Primes"), actualJson.get("Primes"));
-        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertPrimeEndpointStatusIsOkAndPrimesEqual("12", "[2, 3, 5, 7, 11]");
     }
 
     @Test
     public void shouldGetPrimesUptoSomeLargeNumber() throws Exception {
-        Map<String, String> expectedValues = new HashMap<>();
-        expectedValues.put("Initial", "9999999");
-        expectedValues.put("Primes", "[2, 3, 5, 7, 11, 13");
-        JSONObject expectedJson = new JSONObject(expectedValues);
-
-        ResponseEntity<String> response = restTemplate.getForEntity("/primes/9999999", String.class);
-        JSONObject actualJson = new JSONObject(response.getBody());
-
-        assertEquals(expectedJson.get("Initial"), actualJson.get("Initial"));
-        assertTrue(actualJson.get("Primes").toString().startsWith(expectedJson.get("Primes").toString()));
-        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertPrimeEndpointStatusIsOkAndPrimesStartWith("9999999", "[2, 3, 5, 7, 11, 13");
     }
 
     @Test
@@ -143,4 +92,34 @@ public class PrimeResourceIntegrationTest {
                 MESSAGE_TRY_AGAIN + "}"));
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
     }
+
+    public void assertPrimeEndpointStatusIsOkAndPrimesEqual(String initial, String expectedPrimes) {
+        Map<String, String> expectedValues = new HashMap<>();
+        expectedValues.put("Initial", initial);
+        expectedValues.put("Primes", expectedPrimes);
+        JSONObject expectedJson = new JSONObject(expectedValues);
+
+        ResponseEntity<String> response = restTemplate.getForEntity("/primes/" + initial, String.class);
+        JSONObject actualJson = new JSONObject(response.getBody());
+
+        assertEquals(expectedJson.get("Initial"), actualJson.get("Initial"));
+        assertEquals(expectedJson.get("Primes"), actualJson.get("Primes"));
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+    }
+
+    public void assertPrimeEndpointStatusIsOkAndPrimesStartWith(String initial, String expectedPrimes) {
+        Map<String, String> expectedValues = new HashMap<>();
+        expectedValues.put("Initial", initial);
+        expectedValues.put("Primes", expectedPrimes);
+        JSONObject expectedJson = new JSONObject(expectedValues);
+
+        ResponseEntity<String> response = restTemplate.getForEntity("/primes/" + initial, String.class);
+        JSONObject actualJson = new JSONObject(response.getBody());
+
+        assertEquals(expectedJson.get("Initial"), actualJson.get("Initial"));
+        assertTrue(actualJson.get("Primes").toString().startsWith(expectedJson.get("Primes").toString()));
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+    }
+
+
 }
