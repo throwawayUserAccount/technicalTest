@@ -1,12 +1,8 @@
 package uk.co.rbs.technicalTest.service;
 
-import org.json.JSONObject;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
-
-import static org.springframework.http.HttpStatus.OK;
 
 @Service
 public class PrimesService {
@@ -14,14 +10,12 @@ public class PrimesService {
     private static final boolean NOT_PRIME = false;
     private static final boolean IS_PRIME = true;
 
-    public static ResponseEntity<String> primesUpto(Integer upto) {
-        Map<String, Object> primesMap = new HashMap<>();
+    public static Map<String, String> primesUpto(Integer upto) {
+        Map<String, String> primesMap = new HashMap<>();
         primesMap.put("Initial", upto.toString());
         primesMap.put("Primes",  getPrimes(upto).toString());
 
-        JSONObject json = new JSONObject(primesMap);
-
-        return new ResponseEntity<>(json.toString(), OK);
+        return primesMap;
     }
 
     public static Collection getPrimes(Integer upto) {

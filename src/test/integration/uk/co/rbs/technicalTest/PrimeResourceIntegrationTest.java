@@ -5,22 +5,26 @@ import org.json.JSONObject;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.embedded.LocalServerPort;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.beans.XMLEncoder;
+import java.io.ByteArrayOutputStream;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class PrimeResourceIntegrationTest {
+
+    @LocalServerPort
+    private int port;
 
     public static final String ERROR_INVALID_INPUT = "\"error\":\"Invalid Input\"";
     public static final String MESSAGE_NUMBER_TOO_LARGE = "\"message\":\"Number too large. Try another integer less than 10,000,000\"";
@@ -121,5 +125,30 @@ public class PrimeResourceIntegrationTest {
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
+    @Test
+    public void shouldReturnPrimesResultAsXml() {
+        Map<String, String> expectedValues = new HashMap<>();
+        expectedValues.put("Initial", "11");
+        expectedValues.put("Primes", "[2, 3, 5, 7, 11]");
+        String expecteValuesAsXml = getMapAsXmlString(expectedValues);
 
+        HttpHeaders headers = new HttpHeaders();
+        headers.setAccept(Collections.singletonList(MediaType.APPLICATION_XML));
+
+        HttpEntity<String> entity = new HttpEntity<>("parameters", headers);
+
+        ResponseEntity<String> response = restTemplate.exchange("http://localhost:" +  port + "/primes/11", HttpMethod.GET, entity, String.class);
+        String actualXml = response.getBody();
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(expecteValuesAsXml, actualXml);
+    }
+
+    public String getMapAsXmlString(Map<String, String> hashMap){
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        XMLEncoder xmlEncoder = new XMLEncoder(bos);
+        xmlEncoder.writeObject(hashMap);
+        xmlEncoder.close();
+        return bos.toString();
+    }
 }
